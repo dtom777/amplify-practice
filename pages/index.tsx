@@ -1,53 +1,35 @@
 /* eslint-disable react/jsx-key */
-import AnimalList from '../components/layout/AnimalList';
-import Layout from '../components/layout/Layout';
-import { FC, useState } from 'react';
 import { client } from '../libs/client';
 
 export const getStaticProps = async () => {
-  const animals = await client.get({
-    endpoint: 'animals',
+  const data = await client.get({
+    endpoint: 'prefectures',
   });
 
   return {
     props: {
-      animals: animals.contents,
+      prefectures: data.contents,
     },
   };
 };
 
-const Home: FC<{ animals: any }> = ({ animals }) => {
-  const [selected, setSelected] = useState(animals);
-  // Client JSで処理
-  const dogs = animals.filter((animal) => animal.category.category === '犬');
-  const cats = animals.filter((animal) => animal.category.category === '猫');
-
+const Prefectures = ({ prefectures }) => {
   return (
-    <Layout>
-      <h1 className='pt-10 text-2xl font-bold my-4'>動物一覧</h1>
-      <div>
-        <button
-          className='text-3xl text-white border bg-blue-500 hover:bg-blue-300 rounded-t-md mx-2'
-          onClick={() => setSelected(animals)}
-        >
-          すべて
-        </button>
-        <button
-          className='text-3xl text-white border bg-blue-500 hover:bg-blue-300 rounded-t-md mx-2'
-          onClick={() => setSelected(dogs)}
-        >
-          犬
-        </button>
-        <button
-          className='text-3xl text-white border bg-blue-500 hover:bg-blue-300 rounded-t-md mx-2'
-          onClick={() => setSelected(cats)}
-        >
-          猫
-        </button>
-      </div>
-      <AnimalList animals={selected} />
-    </Layout>
+    <>
+      <h1>都道府県一覧</h1>
+      {prefectures.map((prefecture) => (
+        <div key={prefecture.id} className='text-center'>
+          <input
+            type='checkbox'
+            name='prefecture'
+            value={prefecture.name}
+            defaultChecked={prefecture.checked}
+          />
+          <label>{prefecture.name}</label>
+        </div>
+      ))}
+    </>
   );
 };
 
-export default Home;
+export default Prefectures;
