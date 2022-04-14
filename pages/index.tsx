@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-key */
 import { client } from '../libs/client';
+import Link from 'next/link';
 
 export const getStaticProps = async () => {
   const data = await client.get({
@@ -16,7 +17,10 @@ export const getStaticProps = async () => {
 const Prefectures = ({ prefectures }) => {
   return (
     <>
-      <h1>都道府県一覧</h1>
+      <Link href='/animals'>
+        <a style={{ border: 'solid' }}>動物一覧へ→</a>
+      </Link>
+      <h1 style={{ marginTop: '4px' }}>都道府県一覧</h1>
       {prefectures.map((prefecture) => (
         <div key={prefecture.id} className='text-center'>
           <input
