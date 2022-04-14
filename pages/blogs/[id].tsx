@@ -1,30 +1,30 @@
+import { client } from '../../libs/client';
+
 export const getStaticPaths = async () => {
+  const data = await client.get({ endpoint: 'animals' });
+
+  const paths = data.contents.map((article) => ({
+    params: { id: article.id },
+  }));
+
   return {
-    paths: [
-      { params: { id: '1' } },
-      { params: { id: '2' } },
-      { params: { id: '3' } },
-      { params: { id: '4' } },
-      { params: { id: '5' } },
-      { params: { id: '6' } },
-      { params: { id: '7' } },
-      { params: { id: '8' } },
-      { params: { id: '9' } },
-      { params: { id: '10' } },
-    ],
+    paths,
     fallback: false,
   };
 };
 export const getStaticProps = async ({ params }) => {
+  const { id } = params;
+  const article = await client.get({ endpoint: 'animals', contentId: id });
+
   return {
     props: {
-      params,
+      article,
     },
   };
 };
 
-const Blogs = ({ params }) => {
-  return <div>{params.id}</div>;
+const Blogs = ({ article }) => {
+  return <div>{article.name}</div>;
 };
 
 export default Blogs;
