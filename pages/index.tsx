@@ -24,7 +24,7 @@ const Home: FC<{ animals: any }> = ({ animals }) => {
 
   return (
     <Layout>
-      <h1 className='pt-10 text-2xl font-bold my-4'>記事一覧</h1>
+      <h1 className='pt-10 text-2xl font-bold my-4'>動物一覧</h1>
       <div>
         <button
           className='text-3xl text-white border bg-blue-500 hover:bg-blue-300 rounded-t-md mx-2'
